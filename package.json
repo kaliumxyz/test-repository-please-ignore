@@ -1,0 +1,26 @@
+{
+  "name": "gistory",
+  "version": "0.1.0",
+  "description": "git history manipulating",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaliumxyz/gistory.git"
+  },
+  "keywords": [
+    "git",
+    "history",
+    "voodoo",
+    "unicorn",
+    "10x"
+  ],
+  "author": "Martijn Becker",
+  "license": "SEE LICENSE IN license.md",
+  "bugs": {
+    "url": "https://github.com/kaliumxyz/gistory/issues"
+  },
+  "homepage": "https://github.com/kaliumxyz/gistory#readme"
+}
