@@ -1,11 +1,9 @@
 {
   "name": "gistory",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "git history manipulating",
   "main": "index.js",
-  "scripts": {
-    "test": "ava"
-  },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kaliumxyz/gistory.git"
@@ -22,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/kaliumxyz/gistory/issues"
   },
-  "homepage": "https://github.com/kaliumxyz/gistory#readme"
+  "homepage": "https://github.com/kaliumxyz/gistory#readme",
+  "dependencies": {
+    "args": "^5.0.1",
+    "chalk": "^5.0.0"
+  }
 }
