@@ -9,14 +9,16 @@ fi
 
 HELP=$(cat <<-END
 
-	\e[1mUsage:\e[0m	$0 COMMAND [OPTIONS]
+	\e[1mUsage:\e[0m	$0 [help] NEW_NAME NEW_EMAIL 	rename author of all commits
 
 	Rewrite git history!
 
 	\e[1mCommands: \e[0m
-	 help                           	echo this output
+	 help                	echo this output
      help [COMMAND]                     print help of COMMAND
-	 rename NEW_NAME NEW_EMAIL 	rename author of all commits
+   NEW_NAME NEW_EMAIL 	rename author of all commits
+
+	 
 END
 )
 
@@ -47,9 +49,8 @@ function renameAll()
 {
 cd $(git rev-parse --show-toplevel)
 export FILTER_BRANCH_SQUELCH_WARNING=1.
-EMAIL=\"$1\"
-NEW_NAME=\"$2\"
-NEW_EMAIL=\"$3\"
+NEW_NAME=\"$1\"
+NEW_EMAIL=\"$2\"
 
 git filter-branch -f --env-filter " \
 GIT_COMMITTER_NAME=\"$NEW_NAME\" \
@@ -65,12 +66,7 @@ case $1 in
 		echo -e "$HELP"
 		exit 0
 		;;
- 	rename)
-		renameAll $@
-		;;
  	*)
-    echo "unknown command $2"
-		echo -e "$HELP"
-		exit 0
+		renameAll $@
 		;;
 esac
