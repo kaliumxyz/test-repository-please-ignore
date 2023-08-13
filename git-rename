@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+# first check if we have all the reqs
+
+if ! which git > /dev/null 2>&1 ; then
+    echo "please install git."
+    exit 1
+fi
+
+HELP=$(cat <<-END
+
+	\e[1mUsage:\e[0m	$0 COMMAND [OPTIONS]
+
+	Rewrite git history!
+
+	\e[1mCommands: \e[0m
+	 help                           	echo this output
+     help [COMMAND]                     print help of COMMAND
+	 rename NEW_NAME NEW_EMAIL 	rename author of all commits
+END
+)
+
+RENAME_HELP=$(cat <<-END
+
+	\e[1mUsage:\e[0m	$0 RENAME EMAIL NEW_NAME NEW_EMAIL [OPTIONS]
+
+    this tool rewrites all git history, provide new name, new email and rewrite all commits
+	
+	\e[1mArguments: \e[0m
+    NEW_NAME	the new name
+    NEW_EMAIL	new email
+END
+)
+
+function usage()
+{
+        echo -e "$HELP"
+        exit 0
+}
+
+if [ $# -lt 1 ]
+then
+	usage
+fi
+
+function renameAll()
+{
+cd $(git rev-parse --show-toplevel)
+export FILTER_BRANCH_SQUELCH_WARNING=1.
+EMAIL=\"$1\"
+NEW_NAME=\"$2\"
+NEW_EMAIL=\"$3\"
+
+git filter-branch -f --env-filter " \
+GIT_COMMITTER_NAME=\"$NEW_NAME\" \
+GIT_COMMITTER_EMAIL=\"$NEW_EMAIL\" \
+GIT_AUTHOR_NAME=\"$NEW_NAME\" \
+GIT_AUTHOR_EMAIL=\"$NEW_EMAIL\"" --tag-name-filter cat -- --branches --tags
+
+}
+
+echo $@
+case $1 in
+	help)
+		echo -e "$HELP"
+		exit 0
+		;;
+ 	rename)
+		renameAll $@
+		;;
+ 	*)
+    echo "unknown command $2"
+		echo -e "$HELP"
+		exit 0
+		;;
+esac
